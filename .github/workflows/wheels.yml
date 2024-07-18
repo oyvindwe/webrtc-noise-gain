@@ -19,7 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
-          release_name: ${{ github.ref }}
+          generateReleaseNotes: true
+          makeLatest: true
   build:
     name: "Build: Python ${{ matrix.python-version }} on ${{ matrix.os }}"
     strategy:
