@@ -16,8 +16,6 @@ jobs:
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
         with:
           generateReleaseNotes: true
           makeLatest: true
@@ -49,11 +47,7 @@ jobs:
           .venv/bin/pip3 wheel .
           echo "wheel=$(ls *.whl)" > ${GITHUB_OUTPUT}
       - name: upload
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.wheel.outputs.wheel }}
+          file: ${{ steps.wheel.outputs.wheel }}
           asset_name: ${{ steps.wheel.outputs.wheel }}
-          asset_content_type: application/octet-stream
